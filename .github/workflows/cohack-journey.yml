@@ -1,6 +1,8 @@
 name: 🚀 CoHack Journey
 
-on: [push]
+on:
+  push:
+  workflow_dispatch:
 
 env:                                     # Workflow-level variable
   WORKSHOP_NAME: "GH-200 CoHack"
