@@ -21,7 +21,6 @@ jobs:
         timeout-minutes: 1
         run: |
           echo "This step must complete in 2 mins"
-          sleep 30
           echo "completed within time"
 
   
@@ -43,28 +42,13 @@ jobs:
           name: build-report
           path: build-output
 
-  
-  test:
-    runs-on: ${{ matrix.os }}
+  notify-team:
     needs: build
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        python-version: ['3.10', '3.11', '3.12']
-        exclude:
-          - os: windows-latest        # Skip this combo
-            python-version: '3.10'
-        include:
-          - os: ubuntu-latest         # Add extra config
-            python-version: '3.12'
-            experimental: true
-      fail-fast: false               # Don't cancel others if one fails
-    steps:
-      - name: 🐍 Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: 🧪 Run Tests
-        run: |
-          echo "Testing on ${{ matrix.os }} with Python ${{ matrix.python-version }}"
-          python --version
+    uses: ./.github/workflows/reusable-notify.yml
+    with:
+      message: "Deployment complete! Run #${{ github.run_number }}"
+      environment: production
+    secrets:
+      NOTIFY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  
