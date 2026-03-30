@@ -8,3 +8,9 @@ jobs:
     steps:
       - name: Say Hello
         run: echo "Hello from GH-200 Session!! Let's build something amazing today!!"
+
+      - name: Checkout Reporsitory
+        uses: actions/checkout@v6
+
+      - name: List files
+        run: ls -la
