@@ -18,6 +18,6 @@ jobs:
       - name: sTEP WITH timeout
         timeout-minutes: 1
         run: |
-          echo " This step must complete in 2 mins
+          echo "This step must complete in 2 mins"
           sleep 70
           echo "completed within time"
